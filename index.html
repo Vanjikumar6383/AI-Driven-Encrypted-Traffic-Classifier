@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureFlow AI | SOC Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="logo-section">
+                <div class="logo-icon"></div>
+                <h1>SecureFlow <span>AI</span></h1>
+            </div>
+            <div class="system-status">
+                <span class="status-dot pulse"></span>
+                <span class="status-text">SYSTEM ACTIVE</span>
+            </div>
+            <div class="nav-right">
+                <div class="live-indicator">
+                    <span class="dot"></span> LIVE
+                </div>
+                <div class="real-time-clock" id="clock">00:00:00</div>
+                <div class="user-profile">
+                    <div class="avatar">SA</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li class="active" data-section="dashboard">
+                            <span class="icon">📊</span>
+                            Dashboard
+                        </li>
+                        <li data-section="live-traffic">
+                            <span class="icon">🌐</span>
+                            Live Traffic
+                        </li>
+                        <li data-section="alerts">
+                            <span class="icon">🚨</span>
+                            Alerts
+                            <span class="badge" id="alert-badge">3</span>
+                        </li>
+                        <li data-section="threat-intel">
+                            <span class="icon">🧠</span>
+                            Threat Intelligence
+                        </li>
+                        <li data-section="logs">
+                            <span class="icon">📝</span>
+                            Logs
+                        </li>
+                    </ul>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="version">v1.2.4-stable</div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="content-area">
+                <!-- KPI Cards -->
+                <section class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">Total Traffic Volume</span>
+                            <span class="kpi-icon">📈</span>
+                        </div>
+                        <div class="kpi-value" id="total-traffic">1.2 GB</div>
+                        <div class="kpi-footer">
+                            <span class="trend up">↑ 12%</span> vs last hour
+                        </div>
+                    </div>
+                    <div class="kpi-card highlight-red">
+                        <div class="kpi-header">
+                            <span class="kpi-label">Malicious Traffic</span>
+                            <span class="kpi-icon">🛡️</span>
+                        </div>
+                        <div class="kpi-value" id="malicious-count">142</div>
+                        <div class="kpi-footer">
+                            <span class="trend up">↑ 5%</span> active threats
+                        </div>
+                    </div>
+                    <div class="kpi-card" id="threat-level-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">Threat Level</span>
+                            <span class="kpi-icon">⚠️</span>
+                        </div>
+                        <div class="kpi-value warning" id="threat-level">MEDIUM</div>
+                        <div class="kpi-footer">
+                            <div class="status-bar"><div class="fill yellow" style="width: 45%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">Detection Accuracy</span>
+                            <span class="kpi-icon">🎯</span>
+                        </div>
+                        <div class="kpi-value" id="accuracy">98.4%</div>
+                        <div class="kpi-footer">
+                            <span class="trend">Stable</span> AI Model v2
+                        </div>
+                    </div>
+                </section>
+
+                <div class="dashboard-grid">
+                    <!-- Traffic Monitoring Graph -->
+                    <div class="panel traffic-graph">
+                        <div class="panel-header">
+                            <h2>Real-time Traffic Monitoring</h2>
+                            <div class="panel-actions">
+                                <button class="btn-small">1H</button>
+                                <button class="btn-small active">6H</button>
+                                <button class="btn-small">24H</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trafficChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Alerts Panel -->
+                    <div class="panel alerts-panel">
+                        <div class="panel-header">
+                            <h2>Recent Security Alerts</h2>
+                            <button class="btn-link">View All</button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Source IP</th>
+                                        <th>Destination IP</th>
+                                        <th>Threat Type</th>
+                                        <th>Severity</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="alerts-table-body">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Threat Inspection Panel -->
+                    <div class="panel inspection-panel" id="inspection-panel">
+                        <div class="panel-header">
+                            <h2>Threat Inspection</h2>
+                        </div>
+                        <div class="inspection-content" id="inspection-details">
+                            <div class="empty-state">
+                                Select an alert to view detailed forensics
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
